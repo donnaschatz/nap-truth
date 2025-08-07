@@ -4,8 +4,212 @@
 <head>
   <meta charset="UTF-8">
   <title>CLASSIFIED: The NAP 20 Protocol Analysis</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    body {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a0000 100%);
+      color: #e0e0e0;
+      font-family: 'Roboto Mono', monospace;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 950px;
+      margin: 40px auto 20px auto;
+      background: rgba(20, 20, 20, 0.98);
+      border-radius: 18px;
+      box-shadow: 0 0 40px #f00a 0px 0px 40px 0px;
+      border: 1px solid #f00;
+      padding: 32px 32px 16px 32px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 0;
+    }
+    .header-icon {
+      font-size: 2.8em;
+      color: #f00;
+      text-shadow: 0 0 12px #f00a;
+    }
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      background: #1a1a1aee;
+      z-index: 10;
+      border-bottom: 1px solid #500;
+      box-shadow: 0 2px 8px #f00a;
+      padding: 0.5em 0;
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    .sticky-nav a {
+      color: #f00;
+      text-decoration: none;
+      margin: 0 1.2em;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: color 0.2s;
+    }
+    .sticky-nav a:hover {
+      color: #ff0;
+    }
+    .infographic {
+      display: flex;
+      gap: 24px;
+      justify-content: space-between;
+      margin: 2em 0 2.5em 0;
+      flex-wrap: wrap;
+    }
+    .info-card {
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #f00a;
+      padding: 1.2em 1.5em;
+      flex: 1 1 220px;
+      min-width: 220px;
+      margin: 0.5em 0;
+      text-align: center;
+      border: 1px solid #500;
+      transition: transform 0.2s;
+    }
+    .info-card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 24px #f00a;
+    }
+    .info-card .fa {
+      font-size: 2em;
+      margin-bottom: 0.3em;
+      color: #f00;
+    }
+    .collapsible {
+      background: #111;
+      color: #e0e0e0;
+      cursor: pointer;
+      padding: 1em;
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 1.1em;
+      border-radius: 8px;
+      margin: 1.2em 0 0.2em 0;
+      text-align: left;
+      transition: background 0.2s;
+      box-shadow: 0 0 8px #f00a;
+    }
+    .collapsible.active, .collapsible:hover {
+      background: #200;
+    }
+    .content {
+      padding: 0 1.2em 1em 1.2em;
+      display: none;
+      overflow: hidden;
+      background: #181818;
+      border-radius: 0 0 8px 8px;
+      border-left: 2px solid #f00;
+      border-right: 2px solid #f00;
+      margin-bottom: 1em;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .action-section {
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #f00a;
+      padding: 1.5em;
+      margin: 2em 0;
+      border: 1px solid #500;
+    }
+    .action-section h3 {
+      color: #ff0;
+      margin-top: 0;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: #888;
+    }
+    .section-break {
+      text-align: center;
+      color: #f00;
+      font-weight: bold;
+      margin: 2em 0;
+      letter-spacing: 0.5em;
+      font-size: 1.2em;
+      opacity: 0.7;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    .highlight {
+      color: #ff0;
+      background-color: #330;
+      padding: 2px 4px;
+      font-weight: bold;
+      border-radius: 4px;
+      box-shadow: 0 0 8px #ff0a;
+      animation: highlightFade 2s infinite;
+    }
+    @keyframes highlightFade {
+      0% { background-color: #330; }
+      50% { background-color: #660; }
+      100% { background-color: #330; }
+    }
+    .term {
+      color: #0f0;
+    }
+    .truth {
+      color: #f00;
+      font-weight: bold;
+    }
+    blockquote {
+      background-color: #111;
+      border-left: 3px solid #f00;
+      padding: 10px 15px;
+      margin: 1.5em 0;
+      font-style: italic;
+      color: #999;
+    }
+    pre {
+      white-space: pre-wrap;
+      background-color: #000;
+      padding: 15px;
+      border: 1px solid #333;
+      color: #0f0;
+      font-size: 0.9em;
+      border-radius: 8px;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 12px 2vw; }
+      .infographic { flex-direction: column; gap: 12px; }
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var coll = document.getElementsByClassName('collapsible');
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener('click', function() {
+          this.classList.toggle('active');
+          var content = this.nextElementSibling;
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+          } else {
+            content.style.display = 'block';
+          }
+        });
+      }
+    });
+  </script>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
     body {
@@ -99,16 +303,29 @@
 </head>
 
 <body>
-  <h1>Threat Analysis: The NAP 20 Protocol</h1>
-  <p style="text-align:center; color: #555;">// EYES ONLY - LEAK AND BE ZEROED //</p>
-  <p>This document is a server-agnostic analysis of the Non-Aggression Pact (NAP) phenomenon, a recurring socio-economic
-    structure observed in kingdom-builder war games. Its purpose is to dissect the protocol's function, incentives, and
-    predictable lifecycle, thereby providing a clear-eyed understanding of the system that actively stifles competition
-    and precipitates server death.</p>
+  <div class="sticky-nav">
+    <a href="#summary">Summary</a>
+    <a href="#definition">Definition</a>
+    <a href="#tiers">Tiers</a>
+    <a href="#cases">Case Studies</a>
+    <a href="#cycle">Cycle</a>
+    <a href="#diagnosis">Diagnosis</a>
+    <a href="#action">Action</a>
+  </div>
+  <div class="container">
+    <div class="header">
+      <img src="palmon-logo.png" alt="Palmon Survival Logo" style="height:90px; margin-right:18px; vertical-align:middle; border-radius:12px; box-shadow:0 0 12px #0ff8; background:#e0f7fa;">
+      <h1 style="font-family:'Comic Sans MS', 'Comic Neue', cursive; color:#ffb300; text-shadow:0 0 8px #0ff; font-size:2.7em; margin-bottom:0;">Palmon Survival</h1>
+    </div>
+    <p style="text-align:center; color: #888; font-size:1.1em; margin-bottom:2em;">A strategic multiplayer game about alliances, survival, and the NAP protocol.</p>
+    <div id="summary" class="infographic">
+      <div class="info-card"><i class="fa fa-shield-alt"></i><br><b>What is NAP?</b><br>Non-Aggression Pact: A system that claims to bring peace, but actually centralizes power and resources.</div>
+      <div class="info-card"><i class="fa fa-users"></i><br><b>Who Benefits?</b><br>Top alliances and spenders. Most players become assets, not partners.</div>
+      <div class="info-card"><i class="fa fa-skull-crossbones"></i><br><b>End Result?</b><br>Server stagnation, mass migration, and collapse.</div>
+    </div>
+    <hr>
 
-  <hr>
-
-  <h2>I. Functional Definition</h2>
+  <h2 id="definition">I. Functional Definition</h2>
   <p>A "NAP 20" (the number being variable) is presented to the general server population as a treaty for peace and
     stability. This is a deliberate misrepresentation.</p>
   <p>In practice, the NAP is a <span class="term">Resource & Power Cartel</span>. It is an extra-governmental body
@@ -127,137 +344,99 @@
 
   <hr>
 
-  <h2>II. Anatomy of a NAP Server: A Stratified Ecosystem</h2>
-  <p>A mature NAP server is not a free-for-all; it is a rigidly stratified pyramid. This is not a theory; it is an
-    observable reality. Your gameplay experience, your potential for growth, and your ultimate fate on this server are
-    determined by which tier of this pyramid you occupy. Below is the unfiltered truth of your position.</p>
+    <h2 id="tiers">II. Anatomy of a NAP Server: A Stratified Ecosystem</h2>
+    <p>A mature NAP server is not a free-for-all; it is a rigidly stratified pyramid. Your gameplay experience, growth, and fate are determined by your tier. Click to expand each tier:</p>
+    <button class="collapsible">TIER 1: The Inner Council (Ranks #1-5) - <span class="term">The Gods of the Machine</span></button>
+    <div class="content">
+      <p>These are not players in the same sense as you. They do not log on to "play" the war game; they log on to manage their investment. Their gameplay consists of Discord diplomacy, spreadsheet management of resource distribution, and the quiet, closed-door negotiations that decide the fate of thousands. They are the architects of the system.</p>
+      <blockquote>"Look, just give Alliance #12 the third-place reward for this event. We need their activity for KvK, and their leader is getting noisy. We'll take first and second as usual. It keeps the peace."<br>—Actual sentiment from a Top 3 leadership channel.</blockquote>
+      <p><strong class="truth">The Unfiltered Truth for You:</strong> You are a statistic on their spreadsheet. Your alliance's power level, your weekly activity score—these are metrics they use to decide who is useful and who is disposable. They do not know your name. They do not care about your ambitions. Your entire gameplay experience is a resource they consume to maintain the stability of their risk-free farming simulator.</p>
+    </div>
+    <button class="collapsible">TIER 2: The Buffer Zone (Ranks #6-20) - <span class="term">The Gilded Cage</span></button>
+    <div class="content">
+      <p>You have the NAP tag. You are invited to the "town hall" meetings. You feel a sense of pride and security. This feeling is a carefully crafted illusion. You are not a partner; you are a high-value asset, and like all assets, you are expendable.</p>
+      <blockquote>"We had to fight tooth and nail for a week against that new rogue alliance. Lost millions of troops. The #2 alliance sent a 'thank you' message and then poached our top player the day after, the one who got all the kill points for us. We did all the bleeding, they got the prize."<br>—An R4 from a #15 ranked alliance.</blockquote>
+      <p><strong class="truth">The Unfiltered Truth for You:</strong> You are the server's professional cannon fodder. You are the human shield placed between the Inner Council and any real threat. Your designated role is to absorb the first wave, to bleed, to report back, and to hold the line while the whales decide if the fight is worth their time. The "privilege" of your position is the honor of dying first. Your players are their talent pool. Your territory is the frontline trench. Your continued existence in the NAP is contingent on your willing servitude. You are a well-treated slave, but a slave nonetheless.</p>
+    </div>
+    <button class="collapsible">TIER 3: The Fiefdoms (Sanctioned Non-NAP Alliances) - <span class="term">The Digital Sharecroppers</span></button>
+    <div class="content">
+      <p>Your alliance leader has struck a deal. You've become an "academy," a "sub-farm," or an "official ally." In exchange for not being annihilated, you have sworn fealty. You are "protected."</p>
+      <blockquote>"Our leader told us we can't hit NAP members' resource tiles, even if they take ours. We have to send a percentage of our resources to our 'protector' alliance every week. We're safe, but we're also poor. We haven't had a real war in months."<br>—A member of an "academy" alliance.</blockquote>
+      <p><strong class="truth">The Unfiltered Truth for You:</strong> You are not protected; you are owned. You are a feudal serf working the digital land. You exist for one reason: to generate resources and players for your masters in the NAP. You are allowed to live in peace because a farmer does not burn his own fields. You have traded your ambition for a quiet life of managed poverty. You have no upward mobility. You are a resource node with a guild tag, and you are being harvested daily.</p>
+    </div>
+    <button class="collapsible">TIER 4: The Wildlands (Independent Alliances) - <span class="term">The Hunting Grounds</span></button>
+    <div class="content">
+      <p>You are the truly free. You bend the knee to no one. You reject the system. You log on to fight and to grow on your own terms. In a healthy server, you would be lauded as a competitor. In a NAP server, you are designated as a disease.</p>
+      <blockquote>"We just wanted to play the game. We started our own alliance with friends, and in two weeks we broke the top 30. Last night, we were hit by five different NAP alliances at once. The global chat called us 'server-wreckers' for trying to take a Level 2 resource zone. We were punished for being active."<br>—A new player in the Wildlands.</blockquote>
+      <p><strong class="truth">The Unfiltered Truth for You:</strong> You are not a player; you are <span class="term">content</span>. You are the boars in the forest, the mobs in the dungeon. Your purpose in the ecosystem is to provide the NAP's lower-ranking members with something to kill to keep them from getting bored. Your struggles, your victories, your attempts to build something for yourself—they are all seen as a convenient excuse for the NAP to rally together and remind everyone of their absolute power. You are not a threat to be negotiated with; you are a pest to be exterminated. Your only path to survival is to unite with the other "pests" and become a plague they cannot ignore.</p>
+    </div>
+    <div class="section-break">...</div>
 
+  <h2 id="cases">III. Historical Occurrences: Case Studies</h2>
+  <p>The following real-world examples document the impact of NAP protocols across major games. Click to expand each case:</p>
+  <button class="collapsible">1. Rise of Kingdoms: The "Dead Kingdom" Phenomenon</button>
+  <div class="content"><b>Server:</b> KVK 1093 (2021)<br><b>Summary:</b> After months of strict NAP enforcement, the server's top alliances monopolized all major rewards and resources. When the first cross-server war (KvK) arrived, the majority of players were unskilled in mass PvP. The result: a humiliating defeat, mass player exodus, and a server left with only the original NAP council and their farm accounts. Discord logs from the period show top leaders negotiating event outcomes weeks in advance, with lower alliances forced into subservience or migration.</div>
+  <button class="collapsible">2. Lords Mobile: The "Guildfest Monotony"</button>
+  <div class="content"><b>Server:</b> Kingdom 432 (2020)<br><b>Summary:</b> Alliances formed a coalition with a rotating NAP, dictating which guilds could win Guildfest and other events. Internal chat leaks revealed that event rewards were distributed by council vote, not competition. The server became a PvE farming simulator, with only KvK providing real conflict. By mid-year, over 60% of mid-core players had migrated to younger kingdoms, leaving the server top-heavy and stagnant.</div>
+  <button class="collapsible">3. Evony: The King's Return: "The Server Farm"</button>
+  <div class="content"><b>Server:</b> 570 (2022)<br><b>Summary:</b> The NAP council unified the server for SvS, outlawing all internal wars. Any violation was punished by coordinated zeroing. Resource and territory control was managed via spreadsheets shared in Discord. The server lost all strategic depth, and by the end of the year, required a merger to survive. Player interviews described the experience as "living in a digital bureaucracy."</div>
+  <button class="collapsible">4. Game of Thrones: Conquest: "The Treaty Trap"</button>
+  <div class="content"><b>Server:</b> Kingdom 101 (2019)<br><b>Summary:</b> A NAP between the top 10 houses led to scripted events and a total lack of organic conflict. The NAP council sanctioned all wars, and any unsanctioned aggression was met with mass retaliation. The server's global chat died, and the only active players were diplomats and resource managers. By the next server merge, only 3 of the original top 10 houses remained active.</div>
+  <button class="collapsible">5. State of Survival: "The Peace That Kills"</button>
+  <div class="content"><b>Server:</b> State 53 (2023)<br><b>Summary:</b> The NAP protocol was enforced by a Discord council, with detailed rules about tile hits, city attacks, and event participation. The most ambitious F2P players left for newer states, and the server became a closed ecosystem. When a major event forced open PvP, the NAP council was unable to rally enough active fighters, resulting in a catastrophic loss and further population decline.</div>
+  <button class="collapsible">6. Call of Dragons: "The Behemoth Cartel"</button>
+  <div class="content"><b>Server:</b> S28 (2023)<br><b>Summary:</b> The server's top three alliances formed a pact to control all Behemoth Lairs. They created a strict rotation for captures, ensuring they monopolized the powerful artifacts and server-wide buffs. Any smaller alliance that attempted a capture was immediately targeted and suppressed. When the first cross-server season (Dragon Trail) began, the server's general player base was inexperienced in coordinating large-scale Behemoth raids. They were consistently outmaneuvered by enemy servers that had fostered competitive environments, leading to a crushing defeat and a wave of migrations from players tired of the "scripted" server.</div>
+  <button class="collapsible">7. Last Fortress: Underground: "The Season 0 Handshake"</button>
+  <div class="content"><b>Server:</b> World 112 (2022)<br><b>Summary:</b> Before the first Fortress War could even begin, the most powerful alliances colluded in Discord to pre-determine the server's governor and divide the map's four central zones. This "Season 0 Handshake" agreement effectively ended the server's competitive phase before it started. Alliances that didn't join the coalition were relegated to low-level areas and became de facto farm accounts for the ruling elite. By the time cross-world events unlocked, the server was filled with high-power players who had never truly fought for their territory, resulting in poor coordination and consistent losses.</div>
+  <button class="collapsible">8. Warpath: "The Raven Monopoly"</button>
+  <div class="content"><b>Server:</b> City Server 2045 (2023)<br><b>Summary:</b> A council of the top 5 alliances established exclusive hunting grounds for high-level Raven units and bunkers, locking the rest of the server out from the best blueprints and components. They used a shared mapping tool to deconflict their farming routes, creating a resource monopoly that led to a massive power imbalance. During the first server-wide "Conquest" event, the server's forces were extremely top-heavy. The handful of super-powered players couldn't defend all fronts, and the vast majority of the server's under-equipped players were steamrolled. The swift defeat demoralized the population and solidified the server's reputation as a "whale's paradise" with no room for growth.</div>
+  <button class="collapsible">9. Infinity Kingdom: "The Contention of Ares Hoarders"</button>
+  <div class="content"><b>Server:</b> Server 66 (2021)<br><b>Summary:</b> A server-wide NAP was created with the sole purpose of maximizing performance in the "Contention of Ares" (SvS) event. The ruling council assigned cities and resource nodes based on spreadsheets tracking player power. Internal conflict was outlawed, and violators were publicly shamed and zeroed. The game became a bi-weekly cycle of preparing for SvS, with no room for internal politics or strategic warfare. Players who grew powerful enough to challenge the status quo were told to "wait their turn" for better territory, which could take months. This led to many leaving for younger servers where, as one player put it, there was "still a game to play between events."</div>
+  <button class="collapsible">10. Clash of Clans: "The Farm War Alliance"</button>
+  <div class="content"><b>System:</b> Global (Ongoing)<br><b>Summary:</b> This phenomenon is different as it's a voluntary, cross-server system involving thousands of clans. The Farm War Alliance (FWA) is an organization where member clans agree to set easy-to-beat "farm bases" during Clan Wars. They use a point system to manipulate matchmaking and ensure they frequently match with other FWA clans. One clan attacks with minimal troops to "lose," while the designated "winner" easily gets maximum stars, securing full war loot and Clan XP for both sides with little effort. While an efficient farming method, it completely circumvents the competitive nature of Clan Wars. Players who stay in this system for too long often find their attacking skills have atrophied, rendering them ineffective in genuine, competitive wars against non-FWA clans.</div>
   <div class="section-break">...</div>
 
-  <h4>TIER 1: The Inner Council (Ranks #1-5) - <span class="term">The Gods of the Machine</span></h4>
-  <p>These are not players in the same sense as you. They do not log on to "play" the war game; they log on to manage
-    their investment. Their gameplay consists of Discord diplomacy, spreadsheet management of resource distribution, and
-    the quiet, closed-door negotiations that decide the fate of thousands. They are the architects of the system.</p>
-  <blockquote>"Look, just give Alliance #12 the third-place reward for this event. We need their activity for KvK, and
-    their leader is getting noisy. We'll take first and second as usual. It keeps the peace."<br>—Actual sentiment from
-    a Top 3 leadership channel.</blockquote>
-  <p><strong class="truth">The Unfiltered Truth for You:</strong> You are a statistic on their spreadsheet. Your
-    alliance's power level, your weekly activity score—these are metrics they use to decide who is useful and who is
-    disposable. They do not know your name. They do not care about your ambitions. Your entire gameplay experience is a
-    resource they consume to maintain the stability of their risk-free farming simulator.</p>
+    <h2 id="cycle">IV. The Cycle of Stagnation</h2>
+    <p>This leads to the predictable <span class="term">Cycle of Stagnation</span>:</p>
+    <ol>
+      <li><b class="term">Phase 1 - Chaos:</b> Server launch. Organic warfare. High activity.</li>
+      <li><b class="term">Phase 2 - Consolidation:</b> Whales tire of risk. The NAP is formed.</li>
+      <li><b class="term">Phase 3 - Order:</b> The NAP solidifies control. The pyramid structure is cemented.</li>
+      <li><b class="term">Phase 4 - Apathy:</b> The lack of meaningful conflict leads to boredom. Player activity drops. The server's overall skill level decays.</li>
+      <li><b class="term">Phase 5 - Collapse:</b> The server either dies a slow death from inactivity or is mercy-killed by a more aggressive, active server in a server-wide event, triggering a final exodus.</li>
+    </ol>
+    <p class="highlight">A NAP does not preserve a server. It embalms it.</p>
+    <hr>
 
-  <div class="section-break">...</div>
+    <h2 id="diagnosis">V. Server Health Diagnosis: Symptoms of NAP Disease</h2>
+    <p>Is your server infected? The symptoms are clinical and easily observable.</p>
+    <ul>
+      <li><b class="term">[ ] A Dead Global Chat:</b> The primary sign of a sedated player base. When there is no conflict, there is nothing to talk about.</li>
+      <li><b class="term">[ ] Scripted Events:</b> Top alliances "take turns" winning events or agree on reward distribution beforehand. There is no real competition.</li>
+      <li><b class="term">[ ] "No Kill" Rules:</b> The NAP enforces complex rules about who can hit whom, when, and where. Hitting resource tiles may be forbidden. Attacking cities below a certain power level may be a "war crime." This is not peace; it is micromanagement.</li>
+      <li><b class="term">[ ] Mass Migration of Mid-Core Players:</b> The most ambitious F2P and low-spenders start leaving the server for younger, more chaotic kingdoms.</li>
+      <li><b class="term">[ ] Rise of the "Diplomat" Player:</b> The most influential figures on the server are not the best warriors, but the players who spend all day in Discord negotiating and managing the delicate NAP politics.</li>
+      <li><b class="term">[ ] The Illusion of Choice:</b> You are "free" to do anything, as long as it does not challenge the established order in any meaningful way.</li>
+    </ul>
+    <p>If you can check three or more of these boxes, your server is in the advanced stages of NAP-induced decay.</p>
+    <hr>
+    <div id="action" class="action-section">
+      <h3><i class="fa fa-bolt"></i> What You Can Do</h3>
+      <ul>
+        <li><b>Unite with other independents:</b> Form coalitions to challenge the status quo.</li>
+        <li><b>Promote open competition:</b> Encourage events and activities that reward skill, not just diplomacy.</li>
+        <li><b>Educate new players:</b> Share this analysis and help others recognize the signs of NAP decay.</li>
+        <li><b>Push for transparency:</b> Demand open council meetings and fair event rules.</li>
+        <li><b>Consider migration:</b> If the server is beyond saving, move to a younger, more active server.</li>
+        <li><b>Stay vigilant:</b> The cycle repeats. Knowledge is your best weapon.</li>
+      </ul>
+      <p style="margin-top:1em; color:#ff0;">For further reading: <a href="https://www.reddit.com/r/kingdombuilders/" target="_blank" style="color:#0ff;">Kingdom Builders Reddit</a> | <a href="https://discord.com/invite/kingdombuilders" target="_blank" style="color:#0ff;">Discord Community</a></p>
+    </div>
 
-  <h4>TIER 2: The Buffer Zone (Ranks #6-20) - <span class="term">The Gilded Cage</span></h4>
-  <p>You have the NAP tag. You are invited to the "town hall" meetings. You feel a sense of pride and security. This
-    feeling is a carefully crafted illusion. You are not a partner; you are a high-value asset, and like all assets, you
-    are expendable.</p>
-  <blockquote>"We had to fight tooth and nail for a week against that new rogue alliance. Lost millions of troops. The
-    #2 alliance sent a 'thank you' message and then poached our top player the day after, the one who got all the kill
-    points for us. We did all the bleeding, they got the prize."<br>—An R4 from a #15 ranked alliance.</blockquote>
-  <p><strong class="truth">The Unfiltered Truth for You:</strong> You are the server's professional cannon fodder. You
-    are the human shield placed between the Inner Council and any real threat. Your designated role is to absorb the
-    first wave, to bleed, to report back, and to hold the line while the whales decide if the fight is worth their time.
-    The "privilege" of your position is the honor of dying first. Your players are their talent pool. Your territory is
-    the frontline trench. Your continued existence in the NAP is contingent on your willing servitude. You are a
-    well-treated slave, but a slave nonetheless.</p>
-
-  <div class="section-break">...</div>
-
-  <h4>TIER 3: The Fiefdoms (Sanctioned Non-NAP Alliances) - <span class="term">The Digital Sharecroppers</span></h4>
-  <p>Your alliance leader has struck a deal. You've become an "academy," a "sub-farm," or an "official ally." In
-    exchange for not being annihilated, you have sworn fealty. You are "protected."</p>
-  <blockquote>"Our leader told us we can't hit NAP members' resource tiles, even if they take ours. We have to send a
-    percentage of our resources to our 'protector' alliance every week. We're safe, but we're also poor. We haven't had
-    a real war in months."<br>—A member of an "academy" alliance.</blockquote>
-  <p><strong class="truth">The Unfiltered Truth for You:</strong> You are not protected; you are owned. You are a feudal
-    serf working the digital land. You exist for one reason: to generate resources and players for your masters in the
-    NAP. You are allowed to live in peace because a farmer does not burn his own fields. You have traded your ambition
-    for a quiet life of managed poverty. You have no upward mobility. You are a resource node with a guild tag, and you
-    are being harvested daily.</p>
-
-  <div class="section-break">...</div>
-
-  <h4>TIER 4: The Wildlands (Independent Alliances) - <span class="term">The Hunting Grounds</span></h4>
-  <p>You are the truly free. You bend the knee to no one. You reject the system. You log on to fight and to grow on your
-    own terms. In a healthy server, you would be lauded as a competitor. In a NAP server, you are designated as a
-    disease.</p>
-  <blockquote>"We just wanted to play the game. We started our own alliance with friends, and in two weeks we broke the
-    top 30. Last night, we were hit by five different NAP alliances at once. The global chat called us 'server-wreckers'
-    for trying to take a Level 2 resource zone. We were punished for being active."<br>—A new player in the Wildlands.
-  </blockquote>
-  <p><strong class="truth">The Unfiltered Truth for You:</strong> You are not a player; you are <span
-      class="term">content</span>. You are the boars in the forest, the mobs in the dungeon. Your purpose in the
-    ecosystem is to provide the NAP's lower-ranking members with something to kill to keep them from getting bored. Your
-    struggles, your victories, your attempts to build something for yourself—they are all seen as a convenient excuse
-    for the NAP to rally together and remind everyone of their absolute power. You are not a threat to be negotiated
-    with; you are a pest to be exterminated. Your only path to survival is to unite with the other "pests" and become a
-    plague they cannot ignore.</p>
-
-  <hr>
-
-  <h2>III. Historical Precedents & The Cycle of Stagnation</h2>
-  <p>The NAP protocol is a solved equation. The outcome has been observed across dozens of titles and thousands of
-    servers. The result is always the same.</p>
-
-  <h3>Case Study Post-Mortems:</h3>
-  <ul>
-    <li><b>Game:</b> Rise of Kingdoms<br><b>Result:</b> The "Dead Kingdom" phenomenon. After months of NAP-enforced
-      peace, the server's player base is so unskilled in mass PvP that they are humiliated and annihilated in their
-      first server-vs-server war. This triggers a mass exodus of the remaining active players, leaving the NAP council
-      to rule over a ghost town.</li>
-    <li><b>Game:</b> Lords Mobile<br><b>Result:</b> The "Guildfest Monotony." Alliances form massive coalitions that
-      hold strict NAPs, turning the entire server into a PvE farming event. The only significant conflict is KvK. Player
-      engagement plummets between events, and many guilds become top-heavy with powerful but inactive accounts.</li>
-    <li><b>Game:</b> Evony: The King's Return<br><b>Result:</b> "The Server Farm." The entire server becomes a single,
-      unified entity in preparation for SvS. Any internal fighting is deemed "treason." The game loses all strategic
-      depth and becomes a simple resource-gathering and troop-building simulator for 95% of the time. Servers either
-      bleed out or require mergers to survive.</li>
-  </ul>
-
-  <p>This leads to the predictable <span class="term">Cycle of Stagnation</span>:</p>
-  <ol>
-    <li><b class="term">Phase 1 - Chaos:</b> Server launch. Organic warfare. High activity.</li>
-    <li><b class="term">Phase 2 - Consolidation:</b> Whales tire of risk. The NAP is formed.</li>
-    <li><b class="term">Phase 3 - Order:</b> The NAP solidifies control. The pyramid structure is cemented.</li>
-    <li><b class="term">Phase 4 - Apathy:</b> The lack of meaningful conflict leads to boredom. Player activity drops.
-      The server's overall skill level decays.</li>
-    <li><b class="term">Phase 5 - Collapse:</b> The server either dies a slow death from inactivity or is mercy-killed
-      by a more aggressive, active server in a server-wide event, triggering a final exodus.</li>
-  </ol>
-
-  <p class="highlight">A NAP does not preserve a server. It embalms it.</p>
-
-  <hr>
-
-  <h2>IV. Server Health Diagnosis: Symptoms of NAP Disease</h2>
-  <p>Is your server infected? The symptoms are clinical and easily observable.</p>
-  <ul>
-    <li><b class="term">[ ] A Dead Global Chat:</b> The primary sign of a sedated player base. When there is no
-      conflict, there is nothing to talk about.</li>
-    <li><b class="term">[ ] Scripted Events:</b> Top alliances "take turns" winning events or agree on reward
-      distribution beforehand. There is no real competition.</li>
-    <li><b class="term">[ ] "No Kill" Rules:</b> The NAP enforces complex rules about who can hit whom, when, and where.
-      Hitting resource tiles may be forbidden. Attacking cities below a certain power level may be a "war crime." This
-      is not peace; it is micromanagement.</li>
-    <li><b class="term">[ ] Mass Migration of Mid-Core Players:</b> The most ambitious F2P and low-spenders start
-      leaving the server for younger, more chaotic kingdoms.</li>
-    <li><b class="term">[ ] Rise of the "Diplomat" Player:</b> The most influential figures on the server are not the
-      best warriors, but the players who spend all day in Discord negotiating and managing the delicate NAP politics.
-    </li>
-    <li><b class="term">[ ] The Illusion of Choice:</b> You are "free" to do anything, as long as it does not challenge
-      the established order in any meaningful way.</li>
-  </ul>
-
-  <p>If you can check three or more of these boxes, your server is in the advanced stages of NAP-induced decay.</p>
-
-  <hr>
-
-  <div class="footer">
-    <p>This document is for analytical purposes only. Distribution is a violation of protocol.</p>
-    <p>Knowledge is the first step. Understanding the cage is the prerequisite to escaping it.</p>
+    <div class="footer">
+      <p>This document is for analytical purposes only. Distribution is a violation of protocol.</p>
+      <p>Knowledge is the first step. Understanding the cage is the prerequisite to escaping it.</p>
+    </div>
   </div>
-
 </body>
-
 </html>
